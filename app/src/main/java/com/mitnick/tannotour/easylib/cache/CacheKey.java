@@ -13,8 +13,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CacheBean {
-//    String key() default  "";
-    boolean isList() default false;
-    boolean autoSync() default true;
+public @interface CacheKey {
+//    String[] keys() default {};
+    Class[] keys() default {};
 }

@@ -1,4 +1,4 @@
-package com.mitnick.tannotour.easylib.cache.list
+package com.mitnick.tannotour.easylib.cache.value
 
 import android.os.Looper
 import com.mitnick.tannotour.easylib.cache.CacheObserver

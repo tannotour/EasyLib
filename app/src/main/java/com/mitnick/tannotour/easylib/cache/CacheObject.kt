@@ -8,8 +8,6 @@ package com.mitnick.tannotour.easylib.cache
 interface CacheObject {
 
     fun notifyObserver()
-
-    fun sync()
 }
 //abstract class CacheObject(val cacheKey: String, var autoSync: Boolean) {
 //

@@ -1,7 +1,7 @@
-package com.mitnick.tannotour.easylib.cache.list
+package com.mitnick.tannotour.easylib.cache.value
 
 /**
- * Created by mitnick on 2017/11/5.
+ * Created by mitnick on 2017/11/11.
  * Description
  */
 class ChangeSet(val sign: Int = -1){

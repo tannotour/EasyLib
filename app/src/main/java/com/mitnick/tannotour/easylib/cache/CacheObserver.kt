@@ -5,4 +5,5 @@ package com.mitnick.tannotour.easylib.cache
  * Description
  */
 interface CacheObserver {
+
 }
