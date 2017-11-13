@@ -16,7 +16,10 @@ interface DiskCache {
 
     fun totalSize(): String
 
-    fun formetFileSize(fileS: Long): String {
+    fun formetFileSize(fileS: Long?): String {
+        if(fileS == null){
+            return "0B"
+        }
         val df = DecimalFormat("#.00")
         var fileSizeString: String
         if (fileS < 1024) {
