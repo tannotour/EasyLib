@@ -52,7 +52,10 @@ object LibInit {
                     }
 
                     override fun onActivityPaused(activity: Activity?) {
-
+                        if(activity!=null && activity is CacheObserver && Cache.addObserver(activity)){
+                            Cache.flush()
+                            Log.e(TAG, activity.localClassName + "自动执行同步Cache到硬盘完成")
+                        }
                     }
 
                     override fun onActivityStopped(activity: Activity?) {

@@ -16,6 +16,8 @@ interface DiskCache {
 
     fun totalSize(): String
 
+    fun flush()
+
     fun formetFileSize(fileS: Long?): String {
         if(fileS == null){
             return "0B"
