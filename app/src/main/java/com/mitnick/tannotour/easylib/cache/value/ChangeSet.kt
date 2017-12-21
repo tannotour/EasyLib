@@ -7,10 +7,8 @@ package com.mitnick.tannotour.easylib.cache.value
 class ChangeSet(var type: TYPE, var positionStart: Int = -1, var positionEnd: Int = -1){
     enum class TYPE{
         ADD,
-        ADD_RANGE,
         SET,
         REMOVE,
-        REMOVE_RANGE,
         CLEAR
     }
 }

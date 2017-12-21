@@ -17,7 +17,7 @@ abstract class CacheList<T>(var maxSize: Int = 128): CopyOnWriteArrayList<T>() {
         if(size >= maxSize){
             removeRange(0, maxSize/2)
         }
-        changes.add(ChangeSet(ChangeSet.TYPE.ADD, size))
+        changes.add(ChangeSet(ChangeSet.TYPE.ADD, size, size))
         return super.add(element)
     }
 
@@ -33,7 +33,7 @@ abstract class CacheList<T>(var maxSize: Int = 128): CopyOnWriteArrayList<T>() {
         }else{
             position = minOf(maxOf(index, 0), size)
         }
-        changes.add(ChangeSet(ChangeSet.TYPE.ADD, position))
+        changes.add(ChangeSet(ChangeSet.TYPE.ADD, position, position))
         super.add(position, element)
     }
 
@@ -42,7 +42,7 @@ abstract class CacheList<T>(var maxSize: Int = 128): CopyOnWriteArrayList<T>() {
         elements.reversed().forEach {
             super.add(position, it)
         }
-        changes.add(ChangeSet(ChangeSet.TYPE.ADD_RANGE, position))
+        changes.add(ChangeSet(ChangeSet.TYPE.ADD, position))
     }
 
     override fun set(index: Int, element: T): T {
@@ -51,7 +51,8 @@ abstract class CacheList<T>(var maxSize: Int = 128): CopyOnWriteArrayList<T>() {
     }
 
     override fun removeAt(index: Int): T {
-        changes.add(ChangeSet(ChangeSet.TYPE.REMOVE, minOf(maxOf(index, 0), size)))
+        val position =  minOf(maxOf(index, 0), size)
+        changes.add(ChangeSet(ChangeSet.TYPE.REMOVE, position, position))
         return super.removeAt(index)
     }
 
@@ -60,7 +61,7 @@ abstract class CacheList<T>(var maxSize: Int = 128): CopyOnWriteArrayList<T>() {
         if(index < 0 || index >= size){
             return false
         }
-        changes.add(ChangeSet(ChangeSet.TYPE.REMOVE, index))
+        changes.add(ChangeSet(ChangeSet.TYPE.REMOVE, index, index))
         return super.remove(element)
     }
 
@@ -73,7 +74,7 @@ abstract class CacheList<T>(var maxSize: Int = 128): CopyOnWriteArrayList<T>() {
         for (index in end..start step -1){
             super.removeAt(index)
         }
-        changes.add(ChangeSet(ChangeSet.TYPE.REMOVE_RANGE, start, end))
+        changes.add(ChangeSet(ChangeSet.TYPE.REMOVE, start, end))
         return true
     }
 
