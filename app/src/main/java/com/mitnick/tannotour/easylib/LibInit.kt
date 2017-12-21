@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.mitnick.tannotour.easylib.cache.Cache
 import com.mitnick.tannotour.easylib.cache.CacheObserver
+import com.mitnick.tannotour.easylib.cache.disk.Disk
 import com.mitnick.tannotour.easylib.lifecycle.ActivityLifecycleCallbacksCompat
 import com.mitnick.tannotour.easylib.lifecycle.FragmentLifecycleCallbacks
 import com.mitnick.tannotour.easylib.lifecycle.LifecycleDispatcher
@@ -27,6 +28,7 @@ object LibInit {
     fun appInit(app: Application){
         if(null == applicaion){
             applicaion = WeakReference(app)
+            Cache.init(app.applicationContext)
             registerLifecycle(app)
         }
     }
@@ -52,7 +54,11 @@ object LibInit {
                     }
 
                     override fun onActivityPaused(activity: Activity?) {
-                        if(activity!=null && activity is CacheObserver && Cache.addObserver(activity)){
+//                        if(activity!=null && activity is CacheObserver && Cache.addObserver(activity)){
+//                            Cache.flush()
+//                            Log.e(TAG, activity.localClassName + "自动执行同步Cache到硬盘完成")
+//                        }
+                        if(activity!=null && activity is CacheObserver){
                             Cache.flush()
                             Log.e(TAG, activity.localClassName + "自动执行同步Cache到硬盘完成")
                         }

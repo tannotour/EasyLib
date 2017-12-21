@@ -19,7 +19,7 @@ class Disk(var uniqueName: String = "cache", var maxSize: Long = (10 * 1024 * 10
 
     var mDiskLruCache: DiskLruCache? = null
 
-    fun init(context: Context){
+    override fun init(context: Context){
         try {
             val cacheDir = Util.getDiskCacheDir(context, uniqueName)
             if (!cacheDir.exists()) {
@@ -60,9 +60,13 @@ class Disk(var uniqueName: String = "cache", var maxSize: Long = (10 * 1024 * 10
         out.close()
     }
 
+    fun preDealKey(key: String): String{
+        return key.replace(".", "")
+    }
+
     override fun readFromDisk(key: String, call: ((ok: Boolean, key: String, json: String) -> Unit)?): String? {
         var value: String = ""
-        val snapShot = mDiskLruCache?.get(key)
+        val snapShot = mDiskLruCache?.get(preDealKey(key))
         if (snapShot != null) {
             value = getStreamValue(snapShot, 0)
         }
@@ -71,11 +75,11 @@ class Disk(var uniqueName: String = "cache", var maxSize: Long = (10 * 1024 * 10
     }
 
     override fun writeToDisk(key: String, obj: Any?, call: ((ok: Boolean, key: String, obj: Any?) -> Unit)?): Boolean {
-        val editor = mDiskLruCache?.edit(key)
+        val editor = mDiskLruCache?.edit(preDealKey(key))
         if(editor != null){
             val value = Gson().toJson(obj)
             writeStreamValue(value, editor, 0)
-            Log.e(TAG, "向硬盘写入key=$key,value=$value 的数据。")
+            Log.e(TAG, "向硬盘写入key=${preDealKey(key)},value=$value 的数据。")
             return true
         }else{
             Log.e(TAG, "向硬盘写入数据失败，editor为null。")
@@ -89,8 +93,8 @@ class Disk(var uniqueName: String = "cache", var maxSize: Long = (10 * 1024 * 10
             mDiskLruCache?.delete()
             Log.e(TAG, "清空全部硬盘缓存数据。")
         }else{
-            mDiskLruCache?.remove(key)
-            Log.e(TAG, "删除key=$key size=$size 的硬盘缓存数据。")
+            mDiskLruCache?.remove(preDealKey(key))
+            Log.e(TAG, "删除key=${preDealKey(key)} size=$size 的硬盘缓存数据。")
         }
         return size
     }

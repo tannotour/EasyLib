@@ -1,5 +1,6 @@
 package com.mitnick.tannotour.easylib.cache.disk
 
+import android.content.Context
 import java.text.DecimalFormat
 
 /**
@@ -7,6 +8,8 @@ import java.text.DecimalFormat
  * Description
  */
 interface DiskCache {
+
+    fun init(context: Context)
 
     fun readFromDisk(key: String, call:((ok: Boolean, key: String, json: String) -> Unit)? = null): String?
 

@@ -1,4 +1,4 @@
-package com.mitnick.tannotour.easylib;
+package com.mitnick.tannotour.easylib.test;
 
 /**
  * Created by mitnick on 2017/11/9.
@@ -6,4 +6,5 @@ package com.mitnick.tannotour.easylib;
  */
 
 public class TestCacheBean {
+
 }
